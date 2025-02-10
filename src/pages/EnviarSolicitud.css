@@ -1,0 +1,195 @@
+/* Estilos generales de la página */
+.solicitud-container {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #dbeafe, white, #eff6ff);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Contenedor del formulario */
+  .solicitud-main {
+    flex-grow: 1;
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px 20px;
+  }
+  
+  /* Tarjeta del formulario */
+  .solicitud-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+  }
+  
+  /* Encabezado del formulario */
+  .solicitud-header {
+    padding: 20px;
+    background: linear-gradient(to right, #2563eb, #1e40af);
+    color: white;
+    text-align: center;
+  }
+  
+  /* Barra de progreso */
+  .progress-bar-container {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background-color: #bfdbfe;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .progress-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(to right, #3b82f6, #2563eb);
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+  }
+  
+  /* Formulario */
+  .solicitud-form {
+    padding: 20px;
+  }
+  
+  .solicitud-label {
+    display: block;
+    color: #374151;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .solicitud-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    transition: border 0.2s ease-in-out;
+  }
+  
+  .solicitud-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+  }
+  
+  /* Botones */
+  .solicitud-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .solicitud-btn.primary {
+    background: #2563eb;
+    color: white;
+  }
+  
+  .solicitud-btn.primary:hover {
+    background: #1e40af;
+  }
+  
+  .solicitud-btn.secondary {
+    background: #e5e7eb;
+    color: #374151;
+  }
+  
+  .solicitud-btn.secondary:hover {
+    background: #d1d5db;
+  }
+  
+  /* Mapa */
+  .solicitud-map {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #d1d5db;
+  }
+  
+  .solicitud-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    transition: border 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .solicitud-select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+  }
+
+  .solicitud-mapa-container {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #d1d5db;
+    margin-top: 10px;
+  }
+  
+  .solicitud-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .solicitud-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #f9fafb;
+    transition: border 0.2s ease-in-out;
+  }
+  
+  .solicitud-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+  }
+  
+  .solicitud-btn {
+    background-color: #4d8eff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .solicitud-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .error-message {
+    color: #d32f2f;
+    background: #fdecea;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  
+  
+  

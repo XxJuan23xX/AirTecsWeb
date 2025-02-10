@@ -1,0 +1,71 @@
+.servicios-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.servicios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+.servicio-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.3s ease-in-out;
+}
+
+.servicio-card:hover {
+  transform: scale(1.05);
+}
+
+.servicio-imagen {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.servicio-info {
+  padding: 15px;
+}
+
+.servicio-info h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.servicio-info p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.btn-solicitar {
+  display: inline-block;
+  width: 100%;
+  background: #4d8eff;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+.btn-solicitar:hover {
+  background: #3a78d1;
+}

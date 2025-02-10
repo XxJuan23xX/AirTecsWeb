@@ -1,0 +1,314 @@
+/* Contenedor Principal */
+.solicitud1-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  background: linear-gradient(to bottom, #f4f9ff, #e3ecf7);
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Título */
+.titulo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1a3e72;
+  margin-bottom: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+/* Barra de Progreso */
+.progress-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.progress-line {
+  position: absolute;
+  width: 80%;
+  height: 4px;
+  background: #d3dbe6;
+  top: 50%;
+  z-index: 0;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  position: relative;
+  z-index: 2;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #777;
+  background: white;
+  padding: 10px;
+  border-radius: 50px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  border: 2px solid #d3dbe6;
+}
+
+.progress-step.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.progress-icon {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+/* 🔥 Contenedor de Información */
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* 🔥 Tarjetas de Información */
+.info-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 48%;
+  min-height: 180px;
+}
+/* Estilo para los detalles del servicio */
+.info-card p {
+  margin: 8px 0; /* Espaciado uniforme entre líneas */
+  line-height: 1.6; /* Mejor legibilidad */
+  font-size: 16px;
+  color: #333; /* Color similar al de la imagen de referencia */
+  font-family: "Arial", sans-serif;
+}
+
+/* Estilos para negritas en detalles */
+.info-card strong {
+  font-weight: bold;
+  display: block; /* Forzar salto de línea */
+  margin-top: 5px;
+}
+
+.info-card h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a3e72;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  font-family: "Arial", sans-serif;
+}
+
+/* Mejorar el aspecto del código de servicio */
+.solicitud-codigo {
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a3e72;
+  padding: 12px;
+  background: #f8d7da;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.codigo {
+  font-size: 22px;
+  color: #1e40af;
+  font-weight: bold;
+}
+
+/* Mensajes de carga y error */
+.loading-message, .error-message {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Estilos para la pantalla de carga */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 89vh;
+  background-color: #f4f4f4;
+}
+
+.loading-image {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Barra de progreso de carga */
+.progress-bar {
+  width: 200px;
+  height: 8px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  width: 100%;
+  height: 100%;
+  background-color: #007bff;
+  animation: loadProgress 2s ease-in-out forwards;
+}
+
+@keyframes loadProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Texto de carga */
+.loading-text {
+  font-size: 16px;
+  color: #555;
+  margin-top: 10px;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+}
+
+/* Historial de Actualizaciones */
+.historial-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  margin-top: 20px;
+}
+
+.historial-card h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a3e72;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.historial-item {
+  padding: 10px;
+  border-left: 4px solid #007bff;
+  margin-bottom: 10px;
+}
+
+.historial-estado {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.historial-fecha {
+  font-size: 14px;
+  color: #777;
+}
+
+.historial-tecnico {
+  font-size: 14px;
+  color: #555;
+  font-style: italic;
+}
+
+.sin-actualizaciones {
+  font-size: 16px;
+  color: #dc3545;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+}
+
+.historial-item {
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.historial-item p {
+  margin: 5px 0;
+}
+
+/* 🔥 Estilos para la tarjeta del historial */
+.historial-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.historial-card h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a3e72;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  font-family: "Arial", sans-serif;
+  align-items: center;
+}
+
+.historial-card h3 svg {
+  margin-right: 8px;
+}
+
+.historial-item {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.estado {
+  font-weight: bold;
+  font-size: 16px;
+  color: #003366;
+  font-family: "Arial", sans-serif;
+}
+
+.fecha {
+  font-size: 14px;
+  color: #777;
+  font-family: "Arial", sans-serif;
+}
+
+.detalles {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+  font-family: "Arial", sans-serif;
+}
+
+.tecnico {
+  font-weight: bold;
+  color: #007bff;
+  font-family: "Arial", sans-serif;
+}

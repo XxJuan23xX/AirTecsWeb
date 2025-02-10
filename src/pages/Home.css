@@ -1,0 +1,115 @@
+.home-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Añádelo en el archivo CSS global o específico */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+  }
+  
+  /* Estilos generales de la barra de desplazamiento */
+  ::-webkit-scrollbar {
+    width: 12px; /* Ancho de la barra de desplazamiento */
+    height: 12px; /* Altura de la barra de desplazamiento horizontal (si existe) */
+  }
+  
+  /* Estilos para el track de la barra (el fondo) */
+  ::-webkit-scrollbar-track {
+    background: #466cec; /* Color del fondo del track */
+    border-radius: 10px; /* Bordes redondeados para suavizar */
+  }
+  
+  /* Estilos para el thumb (la parte que se mueve) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #48E5E4; /* Color de la parte que se mueve */
+    border-radius: 10px; /* Bordes redondeados */
+    border: 3px solid #1C1C3B; /* Espacio entre el thumb y el borde del track */
+  }
+  
+  /* Estilo del thumb cuando se pasa el cursor por encima */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #00b8a9; /* Color al pasar el mouse por encima */
+  }
+  
+  .hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    background: linear-gradient(to bottom, #f0f8ff, #e6f0fa);
+  }
+  
+  .hero-content {
+    max-width: 500px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #003366;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 10px;
+    line-height: 1.5;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .buttons-container {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+  }
+  
+  .primary-button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .primary-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .secondary-button {
+    padding: 12px 20px;
+    background-color: white;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .secondary-button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .hero-image img {
+    max-width: 350px;
+  }
+  
+  
+  
+  
+  
