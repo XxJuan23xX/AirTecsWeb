@@ -1,195 +1,244 @@
 /* Estilos generales de la página */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 .solicitud-container {
-    min-height: 100vh;
-    background: radial-gradient(ellipse at top, #dbeafe, white, #eff6ff);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Contenedor del formulario */
-  .solicitud-main {
-    flex-grow: 1;
-    max-width: 1000px;
-    margin: auto;
-    padding: 40px 20px;
-  }
-  
-  /* Tarjeta del formulario */
-  .solicitud-card {
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    border: 1px solid #e5e7eb;
-  }
-  
-  /* Encabezado del formulario */
-  .solicitud-header {
-    padding: 20px;
-    background: linear-gradient(to right, #2563eb, #1e40af);
-    color: white;
-    text-align: center;
-  }
-  
-  /* Barra de progreso */
-  .progress-bar-container {
-    position: relative;
-    width: 100%;
-    height: 6px;
-    background-color: #bfdbfe;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .progress-bar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    background: linear-gradient(to right, #3b82f6, #2563eb);
-    border-radius: 10px;
-    transition: width 0.5s ease-in-out;
-  }
-  
-  /* Formulario */
-  .solicitud-form {
-    padding: 20px;
-  }
-  
-  .solicitud-label {
-    display: block;
-    color: #374151;
-    font-weight: 600;
-    margin-bottom: 5px;
-  }
-  
-  .solicitud-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background-color: #f9fafb;
-    transition: border 0.2s ease-in-out;
-  }
-  
-  .solicitud-input:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
-  }
-  
-  /* Botones */
-  .solicitud-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-  }
-  
-  .solicitud-btn.primary {
-    background: #2563eb;
-    color: white;
-  }
-  
-  .solicitud-btn.primary:hover {
-    background: #1e40af;
-  }
-  
-  .solicitud-btn.secondary {
-    background: #e5e7eb;
-    color: #374151;
-  }
-  
-  .solicitud-btn.secondary:hover {
-    background: #d1d5db;
-  }
-  
-  /* Mapa */
-  .solicitud-map {
-    width: 100%;
-    height: 300px;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid #d1d5db;
-  }
-  
-  .solicitud-select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background-color: #f9fafb;
-    transition: border 0.2s ease-in-out;
-    cursor: pointer;
-  }
-  
-  .solicitud-select:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
-  }
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #dbeafe, white, #eff6ff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
 
-  .solicitud-mapa-container {
-    width: 100%;
-    height: 300px;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 2px solid #d1d5db;
-    margin-top: 10px;
-  }
-  
-  .solicitud-label {
-    font-size: 16px;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 5px;
-    display: block;
-  }
-  
-  .solicitud-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background-color: #f9fafb;
-    transition: border 0.2s ease-in-out;
-  }
-  
-  .solicitud-input:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
-  }
-  
-  .solicitud-btn {
-    background-color: #4d8eff;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .solicitud-btn:hover {
-    transform: scale(1.05);
-  }
+.solicitud-main {
+  flex-grow: 1;
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
+  padding: 40px;
+}
 
-  .error-message {
-    color: #d32f2f;
-    background: #fdecea;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    margin-bottom: 15px;
-    font-weight: bold;
+/* Tarjeta del formulario */
+.solicitud-card {
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  padding: 30px;
+}
+
+/* Encabezado del formulario */
+.solicitud-header {
+  padding: 20px;
+  background: linear-gradient(to right, #2563eb, #1e40af);
+  color: white;
+  text-align: center;
+  font-size: 1.875rem;
+  font-weight: 700;
+  border-radius: 1rem 1rem 0 0;
+}
+
+/* Barra de progreso */
+.progress-bar-container {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background-color: #c3dafb;
+  border-radius: 10px;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  border-radius: 10px;
+  transition: width 0.5s ease-in-out;
+}
+
+/* Formulario */
+.solicitud-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Etiquetas */
+.solicitud-label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+/* Inputs */
+.solicitud-input,
+.solicitud-select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+.solicitud-input:focus,
+.solicitud-select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.3);
+}
+
+/* Botones */
+.solicitud-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.solicitud-btn.primary {
+  background: #2563eb;
+  color: white;
+  padding: 12px 20px; /* Aumenta el padding para hacer el botón más largo */
+  font-size: 1rem; /* Mantén el tamaño de fuente */
+  width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
+  margin-bottom: 15px; /* Agrega margen entre los botones */
+  border-radius: 0.5rem; /* Redondea un poco los bordes */
+}
+
+.solicitud-btn.primary:hover {
+  background: #1e40af;
+}
+
+.solicitud-btn.secondary {
+  background: #e5e7eb;
+  color: #374151;
+  padding: 12px 20px; /* Aumenta el padding para hacer el botón más largo */
+  font-size: 1rem; /* Mantén el tamaño de fuente */
+  width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
+  margin-bottom: 15px; /* Agrega margen entre los botones */
+  border-radius: 0.5rem; /* Redondea un poco los bordes */
+}
+
+.solicitud-btn.secondary:hover {
+  background: #d1d5db;
+}
+
+/* Contenedor del mapa */
+.solicitud-map {
+  width: 100%;
+  height: 350px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 2px solid #d1d5db;
+  margin-top: 20px;
+}
+
+.solicitud-map iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #b91c1c;
+  background: #fdecea;
+  padding: 12px;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #b91c1c;
+}
+
+/* Confirmación del pedido */
+.confirmacion-pedido {
+  text-align: center;
+  background: white;
+  padding: 30px;
+  border-radius: 0.5rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  max-width: 500px;
+}
+
+.numero-orden,
+.codigo-servicio {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+/* Animación suave al pasar el mouse */
+.solicitud-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Ajuste para botones */
+.inline-flex {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Transiciones */
+.transition {
+  transition: all 0.3s ease-in-out;
+}
+
+.duration-200 {
+  transition-duration: 200ms;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  
-  
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease-in-out;
+}
+.progress-text {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin-top: 10px;
+}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Mapa from "../pages/Mapa"; // Importamos el mapa
 import "./EnviarSolicitud.css";
 
 const EnviarSolicitud = () => {
@@ -13,16 +14,56 @@ const EnviarSolicitud = () => {
     marca_ac: "",
     tipo_ac: "",
     detalles: "",
+    latitud: 20.9671,  // Inicializa con valores por defecto
+    longitud: -89.6237,
   });
 
   const [step, setStep] = useState(1);
-  const [orderInfo, setOrderInfo] = useState(null); // 🔥 Almacena el ID y el código de servicio
+  const [orderInfo, setOrderInfo] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [suggestions, setSuggestions] = useState([]);  // Agregamos el estado para las sugerencias
 
-  const progressPercentage = (step / 2) * 100;
+  const totalSteps = 2;
+  const progressPercentage = (step / totalSteps) * 100;
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // Manejo del cambio en el input de la dirección
+  const handleChange = async (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    if (name === "direccion") {
+      try {
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(value)}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
+        );
+        const data = await response.json();
+
+        if (data.results.length > 0) {
+          const suggestions = data.results.map(item => item.formatted_address);
+          setSuggestions(suggestions);  // Almacena las sugerencias para mostrarlas
+        } else {
+          setSuggestions([]);  // Si no hay sugerencias
+        }
+      } catch (error) {
+        console.error("Error obteniendo direcciones:", error);
+      }
+    }
+  };
+
+  // Función para seleccionar una sugerencia
+  const selectSuggestion = async (suggestion) => {
+    setFormData({ ...formData, direccion: suggestion });
+
+    // Obtener las coordenadas de la sugerencia seleccionada
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(suggestion)}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
+    );
+    const data = await response.json();
+
+    if (data.results.length > 0) {
+      const { lat, lng } = data.results[0].geometry.location;
+      setFormData({ ...formData, latitud: lat, longitud: lng });
+    }
   };
 
   const handleNextStep = () => {
@@ -71,12 +112,10 @@ const EnviarSolicitud = () => {
         return;
       }
 
-      // ✅ Capturar el código de servicio correctamente
       setOrderInfo({
         id: data.solicitudId,
         codigo: data.codigo_inicial || "No disponible",
       });
-
     } catch (error) {
       setErrorMessage("Hubo un problema al procesar tu solicitud. Inténtalo de nuevo.");
     }
@@ -92,9 +131,11 @@ const EnviarSolicitud = () => {
               <p>Complete el formulario para solicitar nuestro servicio</p>
             </div>
 
+            {/* Barra de progreso */}
             <div className="progress-bar-container">
               <div className="progress-bar" style={{ width: `${progressPercentage}%` }} />
             </div>
+            <p className="progress-text">Paso {step} de {totalSteps}</p>
 
             {errorMessage && <p className="error-message">{errorMessage}</p>}
 
@@ -108,7 +149,7 @@ const EnviarSolicitud = () => {
                       id="fecha"
                       name="fecha"
                       className="solicitud-input"
-                      value={formData.fecha}
+                      value={formData.fecha || ""}  // Asegúrate de que nunca sea undefined
                       onChange={handleChange}
                       required
                     />
@@ -121,7 +162,7 @@ const EnviarSolicitud = () => {
                       id="hora"
                       name="hora"
                       className="solicitud-input"
-                      value={formData.hora}
+                      value={formData.hora || ""}  // Asegúrate de que nunca sea undefined
                       onChange={handleChange}
                       required
                     />
@@ -129,17 +170,43 @@ const EnviarSolicitud = () => {
 
                   <label className="solicitud-label" htmlFor="direccion">
                     ¿Dónde es el servicio?
-                    <input
-                      type="text"
-                      id="direccion"
-                      name="direccion"
-                      className="solicitud-input"
-                      placeholder="Escribe la dirección"
-                      value={formData.direccion}
-                      onChange={handleChange}
-                      required
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        id="direccion"
+                        name="direccion"
+                        className="solicitud-input"
+                        placeholder="Escribe la dirección"
+                        value={formData.direccion || ""}  // Asegúrate de que nunca sea undefined
+                        onChange={handleChange}
+                        required
+                      />
+
+                      {suggestions.length > 0 && (
+                        <ul className="suggestions-list">
+                          {suggestions.map((suggestion, index) => (
+                            <li key={index} onClick={() => selectSuggestion(suggestion)}>
+                              {suggestion}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
                   </label>
+
+                 {/* Sección del mapa */}
+<div>
+  <p className="solicitud-label">Selecciona la ubicación en el mapa:</p>
+  <Mapa
+    coordenadas={{ lat: formData.latitud, lng: formData.longitud }}
+    setCoordenadas={(coords) => setFormData({ ...formData, latitud: coords.lat, longitud: coords.lng })}
+    direccion={formData.direccion}
+    setDireccion={(direccion) => setFormData({ ...formData, direccion })}
+  />
+  <p className="ubicacion-text">Latitud: {formData.latitud}, Longitud: {formData.longitud}</p>
+</div>
+
+
                 </>
               )}
 
@@ -151,7 +218,7 @@ const EnviarSolicitud = () => {
                       id="marca_ac"
                       name="marca_ac"
                       className="solicitud-input"
-                      value={formData.marca_ac}
+                      value={formData.marca_ac || ""}  // Asegúrate de que nunca sea undefined
                       onChange={handleChange}
                       required
                     >
@@ -169,7 +236,7 @@ const EnviarSolicitud = () => {
                       id="tipo_ac"
                       name="tipo_ac"
                       className="solicitud-input"
-                      value={formData.tipo_ac}
+                      value={formData.tipo_ac || ""}  // Asegúrate de que nunca sea undefined
                       onChange={handleChange}
                       required
                     >
@@ -186,7 +253,7 @@ const EnviarSolicitud = () => {
                       name="detalles"
                       className="solicitud-input"
                       placeholder="Escribe más detalles..."
-                      value={formData.detalles}
+                      value={formData.detalles || ""}  // Asegúrate de que nunca sea undefined
                       onChange={handleChange}
                     />
                   </label>
@@ -199,7 +266,7 @@ const EnviarSolicitud = () => {
                     Anterior
                   </button>
                 )}
-                {step < 2 ? (
+                {step < totalSteps ? (
                   <button type="button" onClick={handleNextStep} className="solicitud-btn primary">
                     Siguiente
                   </button>
@@ -212,7 +279,6 @@ const EnviarSolicitud = () => {
             </form>
           </div>
         ) : (
-          // 📌 Mostrar el código de servicio cuando se completa la solicitud
           <div className="confirmacion-pedido">
             <h2>¡Pedido Completado!</h2>
             <p>Tu número de orden es:</p>

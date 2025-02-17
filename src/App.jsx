@@ -21,6 +21,7 @@ const App = () => {
         <Route path="/Estado-Servicio" element={<EstadoSolicitud />} />
         {/* Ruta corregida: acepta un ID dinámico */}
         <Route path="/enviar-solicitud/:id" element={<EnviarSolicitud />} />
+
       </Routes>
     </Router>
   );
