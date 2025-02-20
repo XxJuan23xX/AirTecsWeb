@@ -49,7 +49,7 @@ const VerSolicitud = () => {
 
   const fetchHistorial = async (solicitudId) => {
     try {
-      const response = await fetch(`https://backend-ronp.onrender.com/progreso/${solicitudId}`);
+      const response = await fetch(`https://backend-ronp.onrender.com /progresoT/${solicitudId}`);
       const data = await response.json();
 
       if (!response.ok) {
