@@ -312,3 +312,68 @@
   color: #007bff;
   font-family: "Arial", sans-serif;
 }
+
+/* Estilo para el modal de pago */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #e74c3c; /* Color rojo para alerta */
+}
+
+.modal-content p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.proceed-button {
+  background-color: #3498db; /* Azul */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.proceed-button:hover {
+  background-color: #2980b9;
+}
+
+/* Estilo para el historial cuando está vacío */
+.historial-card p {
+  font-style: italic;
+  color: #888;
+}
+
+/* Mejora el contenedor general */
+.solicitud1-container {
+  padding: 20px;
+  background-color: #f4f7fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

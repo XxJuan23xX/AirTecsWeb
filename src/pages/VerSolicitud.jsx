@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./VerSolicitud.css";
 import { FaCheckCircle, FaMapMarkerAlt, FaTools, FaTruck } from "react-icons/fa";
 import loadingImage from "../assets/loading.png";
+import { useNavigate } from "react-router-dom";
 
 const VerSolicitud = () => {
   const [solicitud, setSolicitud] = useState(null);
   const [historial, setHistorial] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [ultimoEstado, setUltimoEstado] = useState(""); // ✅ Nuevo estado para controlar la barra
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSolicitud = async () => {
@@ -33,11 +37,12 @@ const VerSolicitud = () => {
           return;
         }
 
-        setTimeout(() => {
-          setSolicitud(data);
-          fetchHistorial(data._id);
-          setLoading(false);
-        }, 2000);
+        console.log("📋 Estado recibido desde la API (solicitud):", data.estado);
+
+        setSolicitud(data);
+        fetchHistorial(data._id);  // ✅ Llamada para obtener el historial
+        setLoading(false);
+
       } catch (error) {
         setErrorMessage("Error al conectar con el servidor.");
         setLoading(false);
@@ -49,24 +54,45 @@ const VerSolicitud = () => {
 
   const fetchHistorial = async (solicitudId) => {
     try {
-      const response = await fetch(`https://backend-ronp.onrender.com /progresoT/${solicitudId}`);
+      const response = await fetch(`https://backend-ronp.onrender.com/progresoT/usuario/${solicitudId}`);
       const data = await response.json();
-
+  
       if (!response.ok) {
         throw new Error(data.error || "Error al obtener el historial de progreso.");
       }
-
+  
+      console.log("📋 Historial recibido desde la API:", data);
+  
       setHistorial(data);
+  
+      // ✅ Accede correctamente al estado_solicitud desde el objeto
+      const ultimo = data.estado_solicitud?.toLowerCase().trim() || "pendiente";
+  
+      if (!ultimo || ultimo === "") {
+        console.log("⚠️ Estado vacío o no válido, asignando 'pendiente'");
+        setUltimoEstado("pendiente");
+      } else {
+        console.log("📋 Último estado extraído del historial (limpio):", ultimo);
+        setUltimoEstado(ultimo);
+      }
+  
+      // ✅ Mostrar el modal si el último estado es "finalizado"
+      if (ultimo === "finalizado") {
+        setShowPaymentModal(true);
+      }
+  
     } catch (error) {
       console.error("Error al obtener el historial de progreso:", error);
     }
   };
+  
+  
+  
 
-  useEffect(() => {
-    if (solicitud && solicitud._id) {
-      fetchHistorial(solicitud._id);
-    }
-  }, [solicitud]);
+  const handleProceedToPayment = () => {
+    setShowPaymentModal(false);
+    navigate("/pago"); // Redirige a la página de pago
+  };
 
   if (loading) {
     return (
@@ -83,43 +109,37 @@ const VerSolicitud = () => {
   if (errorMessage) return <p className="error-message">{errorMessage}</p>;
   if (!solicitud) return <p className="loading-message">No tienes ninguna solicitud activa.</p>;
 
-  // Estados en orden de progreso
-  const estados = ["pendiente", "en camino", "en lugar", "en proceso", "finalizado"];
+  const estados = ["pendiente", "en camino", "en lugar", "en proceso", "finalizado", "pagado"];
 
-  // Obtener el último estado del historial si existe
-  const ultimoEstado = historial.length > 0 ? historial[historial.length - 1].estado : solicitud.estado;
-  
-  // Determinar índice en la barra de progreso
   const estadoIndex = estados.indexOf(ultimoEstado);
+
+  if (estadoIndex === -1) {
+    console.warn("⚠️ Estado no encontrado en la lista de estados:", ultimoEstado);
+  } else {
+    console.log("📋 Índice del estado en la barra de progreso:", estadoIndex);
+  }
+  
+
 
   return (
     <div className="solicitud1-container">
       <h2 className="titulo">Estado del Servicio</h2>
 
-      {/* 🔥 Barra de progreso mejorada */}
       <div className="progress-container">
         <div className="progress-line"></div>
         <div className="progress-steps">
-          <div className={`progress-step ${estadoIndex >= 1 ? "active" : ""}`}>
-            <FaTruck className="progress-icon" />
-            <span>En camino</span>
-          </div>
-          <div className={`progress-step ${estadoIndex >= 2 ? "active" : ""}`}>
-            <FaMapMarkerAlt className="progress-icon" />
-            <span>En lugar</span>
-          </div>
-          <div className={`progress-step ${estadoIndex >= 3 ? "active" : ""}`}>
-            <FaTools className="progress-icon" />
-            <span>En proceso</span>
-          </div>
-          <div className={`progress-step ${estadoIndex >= 4 ? "active" : ""}`}>
-            <FaCheckCircle className="progress-icon" />
-            <span>Finalizado</span>
-          </div>
+          {estados.slice(1, 5).map((estado, index) => (
+            <div key={estado} className={`progress-step ${estadoIndex >= index + 1 ? "active" : ""}`}>
+              {index === 0 && <FaTruck className="progress-icon" />}
+              {index === 1 && <FaMapMarkerAlt className="progress-icon" />}
+              {index === 2 && <FaTools className="progress-icon" />}
+              {index === 3 && <FaCheckCircle className="progress-icon" />}
+              <span>{estado.charAt(0).toUpperCase() + estado.slice(1)}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* 🔥 Detalles del servicio */}
       <div className="info-container">
         <div className="info-card">
           <h3>Detalles del Servicio</h3>
@@ -136,12 +156,10 @@ const VerSolicitud = () => {
         </div>
       </div>
 
-      {/* 🔥 Código de servicio */}
       <div className="solicitud-codigo">
         <p>📌 <strong>Tu código de servicio es:</strong> <span className="codigo">{solicitud.codigo || "Se asignará un código cuando se acepte el servicio."}</span></p>
       </div>
 
-      {/* 🔥 Historial de progreso con mejor diseño */}
       {historial.length > 0 ? (
         <div className="historial-card">
           <h3>📜 Historial de Progreso</h3>
@@ -158,6 +176,16 @@ const VerSolicitud = () => {
         <div className="historial-card">
           <h3>📜 Historial de Progreso</h3>
           <p>Aún no hay actualizaciones en el progreso del servicio.</p>
+        </div>
+      )}
+
+      {showPaymentModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>⚠ Pago Pendiente</h3>
+            <p>Tu servicio ha finalizado. Por favor, procede al pago para completar el proceso.</p>
+            <button className="proceed-button" onClick={handleProceedToPayment}>Proceder al Pago</button>
+          </div>
         </div>
       )}
     </div>
