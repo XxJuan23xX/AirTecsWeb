@@ -54,7 +54,7 @@ const ConektaPay = () => {
 
     try {
       // Envía el token y otros datos al backend para crear el cargo
-      const res = await fetch("http://localhost:3000/conekta/crear-pago", {
+      const res = await fetch("https://airtecs-lgfl.onrender.com/conekta/crear-pago", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

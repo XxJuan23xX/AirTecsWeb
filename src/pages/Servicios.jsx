@@ -8,30 +8,31 @@ import img4 from "../assets/img4.jpg";
 
 const servicios = [
   {
-    id: 1,
+    id: "000000000000000000000001",  // Simulando un ObjectId válido
     titulo: "Mantenimiento de aires acondicionados",
     descripcion: "Servicio de mantenimiento general de aires acondicionados.",
     imagen: img1,
   },
   {
-    id: 2,
+    id: "000000000000000000000002",
     titulo: "Reparación de aires acondicionados",
     descripcion: "Reparación de fallas y problemas en aires acondicionados.",
     imagen: img2,
   },
   {
-    id: 3,
+    id: "000000000000000000000003",
     titulo: "Limpieza de refrigeradores",
     descripcion: "Limpieza profunda y mantenimiento de refrigeradores.",
     imagen: img3,
   },
   {
-    id: 4,
+    id: "000000000000000000000004",
     titulo: "Reparación de refrigeradores",
     descripcion: "Reparación de daños y fallas en refrigeradores.",
     imagen: img4,
   },
 ];
+
 
 const Servicios = () => {
   const navigate = useNavigate();

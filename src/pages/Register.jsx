@@ -44,7 +44,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/autenticacionUsuario/register`, // Cambiado para usar Vite
+        `${import.meta.env.VITE_BACKEND_URL}/autenticacionUsuario/register`,
         {
           method: 'POST',
           headers: {
@@ -54,6 +54,7 @@ const Register = () => {
             nombre_usuario: username,
             email,
             password,
+            avatar: 'uploads/avatar-default.jpg' // 👉 Aquí enviamos el avatar por defecto
           }),
         }
       );

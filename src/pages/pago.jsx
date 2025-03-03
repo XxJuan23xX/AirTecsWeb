@@ -29,7 +29,7 @@ const Pago = () => {
           throw new Error("No se encontró el token de autenticación.");
         }
 
-        const response = await fetch(`https://backend-ronp.onrender.com/solicitudes/mi-solicitud`, {
+        const response = await fetch(`https://airtecs-lgfl.onrender.com/solicitudes/mi-solicitud`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -91,7 +91,7 @@ const Pago = () => {
         pagoData.fecha_expiracion = formData.fechaExpiracion;
       }
 
-      const response = await fetch("https://backend-ronp.onrender.com/pagos/crear", {
+      const response = await fetch("https://airtecs-lgfl.onrender.com/pagos/crear", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

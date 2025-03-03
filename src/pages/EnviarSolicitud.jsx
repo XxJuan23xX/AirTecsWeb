@@ -143,7 +143,7 @@ const EnviarSolicitud = () => {
     console.log("Datos enviados al backend:", requestData);
   
     try {
-      const response = await fetch("https://backend-ronp.onrender.com/formulario/crear-solicitud", {
+      const response = await fetch("https://airtecs-lgfl.onrender.com/formulario/crear-solicitud", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

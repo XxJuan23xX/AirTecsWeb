@@ -196,3 +196,89 @@ html, body {
     display: block;
   }
 }
+
+/* Estilo para el contenedor del avatar y botón */
+.navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre avatar y botón */
+}
+
+/* Avatar en el Navbar */
+.navbar-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #000; /* Borde negro */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* Efecto hover en el avatar */
+.navbar-avatar:hover {
+  transform: scale(1.1);
+}
+
+/* Botón de cerrar sesión */
+.navbar-button.logout {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+/* Efecto hover en el botón */
+.navbar-button.logout:hover {
+  background-color: #e63946;
+}
+
+/* Contenedor del avatar y el menú */
+.avatar-container {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Avatar */
+.navbar-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #000;
+}
+
+/* Menú desplegable */
+.avatar-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.avatar-menu button {
+  background: none;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.avatar-menu button:hover {
+  background-color: #6ca4ff;
+  border: none;
+}

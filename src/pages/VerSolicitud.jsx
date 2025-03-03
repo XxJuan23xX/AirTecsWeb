@@ -9,8 +9,10 @@ const VerSolicitud = () => {
   const [historial, setHistorial] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [ultimoEstado, setUltimoEstado] = useState(""); // ✅ Nuevo estado para controlar la barra
+  const [showPaymentModal, setShowPaymentModal] = useState(false); // Modal para Pago Confirmado
+  const [showModalPendiente, setShowModalPendiente] = useState(false); // ✅ Nuevo Modal para Pago Pendiente
+  const [ultimoEstado, setUltimoEstado] = useState("pendiente");
+  const [solicitudCerrada, setSolicitudCerrada] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,14 +26,14 @@ const VerSolicitud = () => {
       }
 
       try {
-        const response = await fetch("https://backend-ronp.onrender.com/solicitudes/mi-solicitud", {
+        const response = await fetch("https://airtecs-lgfl.onrender.com/solicitudes/mi-solicitud", {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const data = await response.json();
 
-        if (!response.ok) {
+        if (!response.ok || !data) {
           setErrorMessage(data.error || "Error al obtener la solicitud.");
           setLoading(false);
           return;
@@ -39,8 +41,16 @@ const VerSolicitud = () => {
 
         console.log("📋 Estado recibido desde la API (solicitud):", data.estado);
 
-        setSolicitud(data);
-        fetchHistorial(data._id);  // ✅ Llamada para obtener el historial
+        // ✅ Filtra la solicitud si está pagada
+        if (data.estado && data.estado.toLowerCase() === "pagado") {
+          console.log("❌ La solicitud está pagada y será filtrada.");
+          setSolicitudCerrada(true);
+          setLoading(false);
+          return;
+        }
+
+        setSolicitud(data || { estado: "pendiente" });
+        fetchHistorial(data._id);
         setLoading(false);
 
       } catch (error) {
@@ -54,7 +64,7 @@ const VerSolicitud = () => {
 
   const fetchHistorial = async (solicitudId) => {
     try {
-      const response = await fetch(`https://backend-ronp.onrender.com/progresoT/usuario/${solicitudId}`);
+      const response = await fetch(`https://airtecs-lgfl.onrender.com/progresoT/usuario/${solicitudId}`);
       const data = await response.json();
   
       if (!response.ok) {
@@ -62,23 +72,34 @@ const VerSolicitud = () => {
       }
   
       console.log("📋 Historial recibido desde la API:", data);
-  
       setHistorial(data);
   
-      // ✅ Accede correctamente al estado_solicitud desde el objeto
+      // Limpia y estandariza el estado recibido
       const ultimo = data.estado_solicitud?.toLowerCase().trim() || "pendiente";
+      console.log("📋 Último estado procesado:", ultimo);
+      setUltimoEstado(ultimo);
   
-      if (!ultimo || ultimo === "") {
-        console.log("⚠️ Estado vacío o no válido, asignando 'pendiente'");
-        setUltimoEstado("pendiente");
-      } else {
-        console.log("📋 Último estado extraído del historial (limpio):", ultimo);
-        setUltimoEstado(ultimo);
+      // ✅ Genera una clave única por solicitud
+      const modalPendienteKey = `modalPendienteShown_${solicitudId}`;
+      const modalConfirmadoKey = `modalConfirmadoShown_${solicitudId}`;
+  
+      // ✅ Muestra el modal de pago pendiente si el estado es "finalizado"
+      if (ultimo === "finalizado" && localStorage.getItem(modalPendienteKey) !== "true") {
+        console.log("💡 Mostrando el modal de pago pendiente");
+        setShowModalPendiente(true);
+        localStorage.setItem(modalPendienteKey, "true");
       }
   
-      // ✅ Mostrar el modal si el último estado es "finalizado"
-      if (ultimo === "finalizado") {
+      // ✅ Muestra el modal de pago confirmado si el estado es "pagado"
+      if (ultimo === "pagado" && localStorage.getItem(modalConfirmadoKey) !== "true") {
+        console.log("💡 Mostrando el modal de pago confirmado");
         setShowPaymentModal(true);
+        localStorage.setItem(modalConfirmadoKey, "true");
+      }
+  
+      // ✅ Oculta la solicitud si está pagada
+      if (ultimo === "pagado") {
+        setSolicitudCerrada(true);
       }
   
     } catch (error) {
@@ -87,10 +108,18 @@ const VerSolicitud = () => {
   };
   
   
-  
+
+  const handleClosePaymentModal = () => {
+    setShowPaymentModal(false);
+    setSolicitud(null); // Limpia la solicitud al cerrar el modal
+  };
+
+  const handleCloseModalPendiente = () => {
+    setShowModalPendiente(false); // Cierra el modal de pago pendiente
+  };
 
   const handleProceedToPayment = () => {
-    setShowPaymentModal(false);
+    setShowModalPendiente(false);
     navigate("/pago"); // Redirige a la página de pago
   };
 
@@ -107,19 +136,10 @@ const VerSolicitud = () => {
   }
 
   if (errorMessage) return <p className="error-message">{errorMessage}</p>;
-  if (!solicitud) return <p className="loading-message">No tienes ninguna solicitud activa.</p>;
+  if (solicitudCerrada || !solicitud) return <p className="loading-message">No tienes ninguna solicitud activa.</p>;
 
   const estados = ["pendiente", "en camino", "en lugar", "en proceso", "finalizado", "pagado"];
-
   const estadoIndex = estados.indexOf(ultimoEstado);
-
-  if (estadoIndex === -1) {
-    console.warn("⚠️ Estado no encontrado en la lista de estados:", ultimoEstado);
-  } else {
-    console.log("📋 Índice del estado en la barra de progreso:", estadoIndex);
-  }
-  
-
 
   return (
     <div className="solicitud1-container">
@@ -179,12 +199,29 @@ const VerSolicitud = () => {
         </div>
       )}
 
-      {showPaymentModal && (
+      {/* ✅ Modal para Pago Pendiente */}
+      {showModalPendiente && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>⚠ Pago Pendiente</h3>
             <p>Tu servicio ha finalizado. Por favor, procede al pago para completar el proceso.</p>
             <button className="proceed-button" onClick={handleProceedToPayment}>Proceder al Pago</button>
+            <button className="close-button" onClick={handleCloseModalPendiente}>Cerrar</button>
+          </div>
+        </div>
+      )}
+
+      {/* ✅ Modal para Pago Confirmado */}
+      {showPaymentModal && (
+        <div className="modal-overlay1">
+          <div className="modal-content1">
+            <h3 className="modal-title1">
+              ✅ <span className="modal-title-text1">Pago Confirmado</span>
+            </h3>
+            <p className="modal-text1">Tu servicio ha sido pagado y completado con éxito.</p>
+            <button onClick={handleClosePaymentModal} className="modal-button1">
+              Cerrar
+            </button>
           </div>
         </div>
       )}
