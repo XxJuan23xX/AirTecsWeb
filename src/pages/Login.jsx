@@ -17,6 +17,8 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setMessage(""); // Limpiar mensajes anteriores
+
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/autenticacionUsuario/login`,
@@ -25,30 +27,31 @@ const Login = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include", // 🔥 Importante para CORS con credenciales
           body: JSON.stringify({ email, password }),
         }
       );
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Error HTTP: ${response.status}`);
+      }
+
       const data = await response.json();
       console.log("🔹 Respuesta del backend:", data);
 
-      if (response.ok) {
-        setMessage("Inicio de sesión exitoso");
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        console.log("✅ Token almacenado:", data.token);
+        setMessage("Inicio de sesión exitoso ✅");
 
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          console.log("✅ Token almacenado:", data.token);
-          setTimeout(() => navigate("/"), 1000);
-        } else {
-          console.warn("⚠️ No se recibió un token válido.");
-          setMessage("Error: No se recibió un token válido.");
-        }
+        setTimeout(() => navigate("/"), 1000);
       } else {
-        setMessage(data.error || "Credenciales inválidas");
+        throw new Error("No se recibió un token válido.");
       }
     } catch (error) {
-      console.error("❌ Error al iniciar sesión:", error);
-      setMessage("Error al conectar con el servidor");
+      console.error("❌ Error al iniciar sesión:", error.message);
+      setMessage(error.message || "Error al conectar con el servidor.");
     }
   };
 
